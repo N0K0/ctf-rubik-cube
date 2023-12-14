@@ -2,6 +2,7 @@ from rubik import cube
 from rubik.solve import Solver
 from solve_random_cubes import random_cube
 
+
 def solve_for_target():
     base_str = random_cube().flat_str()
     target_str = random_cube().flat_str()
@@ -30,9 +31,7 @@ def solve_for_target():
     print(c, end="\n\n")
 
 
-
 def solve_with_data():
-
     """
     cube_str looks like:
         UUU                       0  1  2
@@ -69,6 +68,5 @@ def solve_with_data():
     print("As you can try to read out: 'PAPA{FLAGS_ARE_FUN}'")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     solve_for_target()
-

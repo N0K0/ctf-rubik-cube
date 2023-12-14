@@ -1,4 +1,3 @@
-
 class Point:
     """A 3D point/vector"""
 
@@ -38,9 +37,11 @@ class Point:
         return self.x * other.x + self.y * other.y + self.z * other.z
 
     def cross(self, other):
-        return Point(self.y * other.z - self.z * other.y,
-                     self.z * other.x - self.x * other.z,
-                     self.x * other.y - self.y * other.x)
+        return Point(
+            self.y * other.z - self.z * other.y,
+            self.z * other.x - self.x * other.z,
+            self.x * other.y - self.y * other.x,
+        )
 
     def __getitem__(self, item):
         if item == 0:
@@ -74,8 +75,7 @@ class Point:
     def __eq__(self, other):
         if isinstance(other, (tuple, list)):
             return self.x == other[0] and self.y == other[1] and self.z == other[2]
-        return (isinstance(other, self.__class__) and self.x == other.x
-                and self.y == other.y and self.z == other.z)
+        return isinstance(other, self.__class__) and self.x == other.x and self.y == other.y and self.z == other.z
 
     def __ne__(self, other):
         return not (self == other)
@@ -104,14 +104,10 @@ class Matrix:
             raise ValueError(f"Matrix requires 9 items, got {args}")
 
     def __str__(self):
-        return ("[{}, {}, {},\n"
-                " {}, {}, {},\n"
-                " {}, {}, {}]".format(*self.vals))
+        return "[{}, {}, {},\n" " {}, {}, {},\n" " {}, {}, {}]".format(*self.vals)
 
     def __repr__(self):
-        return ("Matrix({}, {}, {},\n"
-                "       {}, {}, {},\n"
-                "       {}, {}, {})".format(*self.vals))
+        return "Matrix({}, {}, {},\n" "       {}, {}, {},\n" "       {}, {}, {})".format(*self.vals)
 
     def __eq__(self, other):
         return self.vals == other.vals

@@ -9,33 +9,21 @@ DOWN = Point(0, -1, 0)
 FRONT = Z_AXIS = Point(0, 0, 1)
 BACK = Point(0, 0, -1)
 
-FACE = 'face'
-EDGE = 'edge'
-CORNER = 'corner'
+FACE = "face"
+EDGE = "edge"
+CORNER = "corner"
 
 # 90 degree rotations in the XY plane. CW is clockwise, CC is counter-clockwise.
-ROT_XY_CW = Matrix(0, 1, 0,
-                   -1, 0, 0,
-                   0, 0, 1)
-ROT_XY_CC = Matrix(0, -1, 0,
-                   1, 0, 0,
-                   0, 0, 1)
+ROT_XY_CW = Matrix(0, 1, 0, -1, 0, 0, 0, 0, 1)
+ROT_XY_CC = Matrix(0, -1, 0, 1, 0, 0, 0, 0, 1)
 
 # 90 degree rotations in the XZ plane (around the y-axis when viewed pointing toward you).
-ROT_XZ_CW = Matrix(0, 0, -1,
-                   0, 1, 0,
-                   1, 0, 0)
-ROT_XZ_CC = Matrix(0, 0, 1,
-                   0, 1, 0,
-                   -1, 0, 0)
+ROT_XZ_CW = Matrix(0, 0, -1, 0, 1, 0, 1, 0, 0)
+ROT_XZ_CC = Matrix(0, 0, 1, 0, 1, 0, -1, 0, 0)
 
 # 90 degree rotations in the YZ plane (around the x-axis when viewed pointing toward you).
-ROT_YZ_CW = Matrix(1, 0, 0,
-                   0, 0, 1,
-                   0, -1, 0)
-ROT_YZ_CC = Matrix(1, 0, 0,
-                   0, 0, -1,
-                   0, 1, 0)
+ROT_YZ_CW = Matrix(1, 0, 0, 0, 0, 1, 0, -1, 0)
+ROT_YZ_CC = Matrix(1, 0, 0, 0, 0, -1, 0, 1, 0)
 
 
 def get_rot_from_face(face):
@@ -59,7 +47,6 @@ def get_rot_from_face(face):
 
 
 class Piece:
-
     def __init__(self, pos, colors, datas=None):
         """
         :param pos: A tuple of integers (x, y, z) each ranging from -1 to 1
@@ -122,9 +109,9 @@ class Piece:
 
 class Cube:
     """Stores Pieces which are addressed through an x-y-z coordinate system:
-        -x is the LEFT direction, +x is the RIGHT direction
-        -y is the DOWN direction, +y is the UP direction
-        -z is the BACK direction, +z is the FRONT direction
+    -x is the LEFT direction, +x is the RIGHT direction
+    -y is the DOWN direction, +y is the UP direction
+    -z is the BACK direction, +z is the FRONT direction
     """
 
     def _from_cube(self, c):
@@ -170,36 +157,84 @@ class Cube:
         assert len(cube_str) == 54
 
         self.faces = (
-            Piece(pos=RIGHT,    colors=(cube_str[28], None, None), datas=(data_list[28], None, None)),
-            Piece(pos=LEFT,     colors=(cube_str[22], None, None), datas=(data_list[22], None, None)),
-            Piece(pos=UP,       colors=(None, cube_str[4], None),  datas=(None, data_list[4], None)),
-            Piece(pos=DOWN,     colors=(None, cube_str[49], None), datas=(None, data_list[49], None)),
-            Piece(pos=FRONT,    colors=(None, None, cube_str[25]), datas=(None, None, data_list[25])),
-            Piece(pos=BACK,     colors=(None, None, cube_str[31]), datas=(None, None, data_list[31]))
+            Piece(pos=RIGHT, colors=(cube_str[28], None, None), datas=(data_list[28], None, None)),
+            Piece(pos=LEFT, colors=(cube_str[22], None, None), datas=(data_list[22], None, None)),
+            Piece(pos=UP, colors=(None, cube_str[4], None), datas=(None, data_list[4], None)),
+            Piece(pos=DOWN, colors=(None, cube_str[49], None), datas=(None, data_list[49], None)),
+            Piece(pos=FRONT, colors=(None, None, cube_str[25]), datas=(None, None, data_list[25])),
+            Piece(pos=BACK, colors=(None, None, cube_str[31]), datas=(None, None, data_list[31])),
         )
         self.edges = (
-            Piece(pos=RIGHT + UP,       colors=(cube_str[16], cube_str[5], None),   datas=(data_list[16], data_list[5], None)),
-            Piece(pos=RIGHT + DOWN,     colors=(cube_str[40], cube_str[50], None),  datas=(data_list[40], data_list[50], None)),
-            Piece(pos=RIGHT + FRONT,    colors=(cube_str[27], None, cube_str[26]),  datas=(data_list[27], None, data_list[26])),
-            Piece(pos=RIGHT + BACK,     colors=(cube_str[29], None, cube_str[30]),  datas=(data_list[29], None, data_list[30])),
-            Piece(pos=LEFT + UP,        colors=(cube_str[10], cube_str[3], None),   datas=(data_list[10], data_list[3], None)),
-            Piece(pos=LEFT + DOWN,      colors=(cube_str[34], cube_str[48], None),  datas=(data_list[34], data_list[48], None)),
-            Piece(pos=LEFT + FRONT,     colors=(cube_str[23], None, cube_str[24]),  datas=(data_list[23], None, data_list[24])),
-            Piece(pos=LEFT + BACK,      colors=(cube_str[21], None, cube_str[32]),  datas=(data_list[21], None, data_list[32])),
-            Piece(pos=UP + FRONT,       colors=(None, cube_str[7], cube_str[13]),   datas=(None, data_list[7], data_list[13])),
-            Piece(pos=UP + BACK,        colors=(None, cube_str[1], cube_str[19]),   datas=(None, data_list[1], data_list[19])),
-            Piece(pos=DOWN + FRONT,     colors=(None, cube_str[46], cube_str[37]),  datas=(None, data_list[46], data_list[37])),
-            Piece(pos=DOWN + BACK,      colors=(None, cube_str[52], cube_str[43]),  datas=(None, data_list[52], data_list[43]))
+            Piece(pos=RIGHT + UP, colors=(cube_str[16], cube_str[5], None), datas=(data_list[16], data_list[5], None)),
+            Piece(
+                pos=RIGHT + DOWN, colors=(cube_str[40], cube_str[50], None), datas=(data_list[40], data_list[50], None)
+            ),
+            Piece(
+                pos=RIGHT + FRONT, colors=(cube_str[27], None, cube_str[26]), datas=(data_list[27], None, data_list[26])
+            ),
+            Piece(
+                pos=RIGHT + BACK, colors=(cube_str[29], None, cube_str[30]), datas=(data_list[29], None, data_list[30])
+            ),
+            Piece(pos=LEFT + UP, colors=(cube_str[10], cube_str[3], None), datas=(data_list[10], data_list[3], None)),
+            Piece(
+                pos=LEFT + DOWN, colors=(cube_str[34], cube_str[48], None), datas=(data_list[34], data_list[48], None)
+            ),
+            Piece(
+                pos=LEFT + FRONT, colors=(cube_str[23], None, cube_str[24]), datas=(data_list[23], None, data_list[24])
+            ),
+            Piece(
+                pos=LEFT + BACK, colors=(cube_str[21], None, cube_str[32]), datas=(data_list[21], None, data_list[32])
+            ),
+            Piece(pos=UP + FRONT, colors=(None, cube_str[7], cube_str[13]), datas=(None, data_list[7], data_list[13])),
+            Piece(pos=UP + BACK, colors=(None, cube_str[1], cube_str[19]), datas=(None, data_list[1], data_list[19])),
+            Piece(
+                pos=DOWN + FRONT, colors=(None, cube_str[46], cube_str[37]), datas=(None, data_list[46], data_list[37])
+            ),
+            Piece(
+                pos=DOWN + BACK, colors=(None, cube_str[52], cube_str[43]), datas=(None, data_list[52], data_list[43])
+            ),
         )
         self.corners = (
-            Piece(pos=RIGHT + UP + FRONT,   colors=(cube_str[15], cube_str[8], cube_str[14]),   datas=(data_list[15], data_list[8], data_list[14])),
-            Piece(pos=RIGHT + UP + BACK,    colors=(cube_str[17], cube_str[2], cube_str[18]),   datas=(data_list[17], data_list[2], data_list[18])),
-            Piece(pos=RIGHT + DOWN + FRONT, colors=(cube_str[39], cube_str[47], cube_str[38]),  datas=(data_list[39], data_list[47], data_list[38])),
-            Piece(pos=RIGHT + DOWN + BACK,  colors=(cube_str[41], cube_str[53], cube_str[42]),  datas=(data_list[41], data_list[53], data_list[42])),
-            Piece(pos=LEFT + UP + FRONT,    colors=(cube_str[11], cube_str[6], cube_str[12]),   datas=(data_list[11], data_list[6], data_list[12])),
-            Piece(pos=LEFT + UP + BACK,     colors=(cube_str[9],  cube_str[0], cube_str[20]),   datas=(data_list[9],  data_list[0], data_list[20])),
-            Piece(pos=LEFT + DOWN + FRONT,  colors=(cube_str[35], cube_str[45], cube_str[36]),  datas=(data_list[35], data_list[45], data_list[36])),
-            Piece(pos=LEFT + DOWN + BACK,   colors=(cube_str[33], cube_str[51], cube_str[44]),  datas=(data_list[33], data_list[51], data_list[44])),
+            Piece(
+                pos=RIGHT + UP + FRONT,
+                colors=(cube_str[15], cube_str[8], cube_str[14]),
+                datas=(data_list[15], data_list[8], data_list[14]),
+            ),
+            Piece(
+                pos=RIGHT + UP + BACK,
+                colors=(cube_str[17], cube_str[2], cube_str[18]),
+                datas=(data_list[17], data_list[2], data_list[18]),
+            ),
+            Piece(
+                pos=RIGHT + DOWN + FRONT,
+                colors=(cube_str[39], cube_str[47], cube_str[38]),
+                datas=(data_list[39], data_list[47], data_list[38]),
+            ),
+            Piece(
+                pos=RIGHT + DOWN + BACK,
+                colors=(cube_str[41], cube_str[53], cube_str[42]),
+                datas=(data_list[41], data_list[53], data_list[42]),
+            ),
+            Piece(
+                pos=LEFT + UP + FRONT,
+                colors=(cube_str[11], cube_str[6], cube_str[12]),
+                datas=(data_list[11], data_list[6], data_list[12]),
+            ),
+            Piece(
+                pos=LEFT + UP + BACK,
+                colors=(cube_str[9], cube_str[0], cube_str[20]),
+                datas=(data_list[9], data_list[0], data_list[20]),
+            ),
+            Piece(
+                pos=LEFT + DOWN + FRONT,
+                colors=(cube_str[35], cube_str[45], cube_str[36]),
+                datas=(data_list[35], data_list[45], data_list[36]),
+            ),
+            Piece(
+                pos=LEFT + DOWN + BACK,
+                colors=(cube_str[33], cube_str[51], cube_str[44]),
+                datas=(data_list[33], data_list[51], data_list[44]),
+            ),
         )
 
         self.pieces = self.faces + self.edges + self.corners
@@ -211,12 +246,14 @@ class Cube:
             assert len(colors) == 9
             return all(c == colors[0] for c in colors)
 
-        return (check([piece.colors[2] for piece in self._face(FRONT)]) and
-                check([piece.colors[2] for piece in self._face(BACK)]) and
-                check([piece.colors[1] for piece in self._face(UP)]) and
-                check([piece.colors[1] for piece in self._face(DOWN)]) and
-                check([piece.colors[0] for piece in self._face(LEFT)]) and
-                check([piece.colors[0] for piece in self._face(RIGHT)]))
+        return (
+            check([piece.colors[2] for piece in self._face(FRONT)])
+            and check([piece.colors[2] for piece in self._face(BACK)])
+            and check([piece.colors[1] for piece in self._face(UP)])
+            and check([piece.colors[1] for piece in self._face(DOWN)])
+            and check([piece.colors[0] for piece in self._face(LEFT)])
+            and check([piece.colors[0] for piece in self._face(RIGHT)])
+        )
 
     def _face(self, axis):
         """
@@ -246,30 +283,77 @@ class Cube:
             piece.rotate(matrix)
 
     # Rubik's Cube Notation: http://ruwix.com/the-rubiks-cube/notation/
-    def L(self): self._rotate_face(LEFT, ROT_YZ_CC)
-    def Li(self): self._rotate_face(LEFT, ROT_YZ_CW)
-    def R(self): self._rotate_face(RIGHT, ROT_YZ_CW)
-    def Ri(self): self._rotate_face(RIGHT, ROT_YZ_CC)
-    def U(self): self._rotate_face(UP, ROT_XZ_CW)
-    def Ui(self): self._rotate_face(UP, ROT_XZ_CC)
-    def D(self): self._rotate_face(DOWN, ROT_XZ_CC)
-    def Di(self): self._rotate_face(DOWN, ROT_XZ_CW)
-    def F(self): self._rotate_face(FRONT, ROT_XY_CW)
-    def Fi(self): self._rotate_face(FRONT, ROT_XY_CC)
-    def B(self): self._rotate_face(BACK, ROT_XY_CC)
-    def Bi(self): self._rotate_face(BACK, ROT_XY_CW)
-    def M(self): self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CC)
-    def Mi(self): self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CW)
-    def E(self): self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CC)
-    def Ei(self): self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CW)
-    def S(self): self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CW)
-    def Si(self): self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CC)
-    def X(self): self._rotate_pieces(self.pieces, ROT_YZ_CW)
-    def Xi(self): self._rotate_pieces(self.pieces, ROT_YZ_CC)
-    def Y(self): self._rotate_pieces(self.pieces, ROT_XZ_CW)
-    def Yi(self): self._rotate_pieces(self.pieces, ROT_XZ_CC)
-    def Z(self): self._rotate_pieces(self.pieces, ROT_XY_CW)
-    def Zi(self): self._rotate_pieces(self.pieces, ROT_XY_CC)
+    def L(self):
+        self._rotate_face(LEFT, ROT_YZ_CC)
+
+    def Li(self):
+        self._rotate_face(LEFT, ROT_YZ_CW)
+
+    def R(self):
+        self._rotate_face(RIGHT, ROT_YZ_CW)
+
+    def Ri(self):
+        self._rotate_face(RIGHT, ROT_YZ_CC)
+
+    def U(self):
+        self._rotate_face(UP, ROT_XZ_CW)
+
+    def Ui(self):
+        self._rotate_face(UP, ROT_XZ_CC)
+
+    def D(self):
+        self._rotate_face(DOWN, ROT_XZ_CC)
+
+    def Di(self):
+        self._rotate_face(DOWN, ROT_XZ_CW)
+
+    def F(self):
+        self._rotate_face(FRONT, ROT_XY_CW)
+
+    def Fi(self):
+        self._rotate_face(FRONT, ROT_XY_CC)
+
+    def B(self):
+        self._rotate_face(BACK, ROT_XY_CC)
+
+    def Bi(self):
+        self._rotate_face(BACK, ROT_XY_CW)
+
+    def M(self):
+        self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CC)
+
+    def Mi(self):
+        self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CW)
+
+    def E(self):
+        self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CC)
+
+    def Ei(self):
+        self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CW)
+
+    def S(self):
+        self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CW)
+
+    def Si(self):
+        self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CC)
+
+    def X(self):
+        self._rotate_pieces(self.pieces, ROT_YZ_CW)
+
+    def Xi(self):
+        self._rotate_pieces(self.pieces, ROT_YZ_CC)
+
+    def Y(self):
+        self._rotate_pieces(self.pieces, ROT_XZ_CW)
+
+    def Yi(self):
+        self._rotate_pieces(self.pieces, ROT_XZ_CC)
+
+    def Z(self):
+        self._rotate_pieces(self.pieces, ROT_XY_CW)
+
+    def Zi(self):
+        self._rotate_pieces(self.pieces, ROT_XY_CC)
 
     def inverse_move_str(self, move_str) -> str:
         # For all moves that has an i, remove the i
@@ -299,8 +383,7 @@ class Cube:
         if None in colors:
             return
         for p in self.pieces:
-            if p.colors.count(None) == 3 - len(colors) \
-                    and all(c in p.colors for c in colors):
+            if p.colors.count(None) == 3 - len(colors) and all(c in p.colors for c in colors):
                 return p
 
     def get_piece(self, x, y, z):
@@ -329,26 +412,48 @@ class Cube:
         """
         return set(c for piece in self.pieces for c in piece.colors if c is not None)
 
-    def left_color(self): return self[LEFT].colors[0]
-    def right_color(self): return self[RIGHT].colors[0]
-    def up_color(self): return self[UP].colors[1]
-    def down_color(self): return self[DOWN].colors[1]
-    def front_color(self): return self[FRONT].colors[2]
+    def left_color(self):
+        return self[LEFT].colors[0]
+
+    def right_color(self):
+        return self[RIGHT].colors[0]
+
+    def up_color(self):
+        return self[UP].colors[1]
+
+    def down_color(self):
+        return self[DOWN].colors[1]
+
+    def front_color(self):
+        return self[FRONT].colors[2]
 
     def back_color(self):
         return self[BACK].colors[2]
 
     def _object_list(self, attr):
         right = [getattr(p, attr)[0] for p in sorted(self._face(RIGHT), key=lambda p: (-p.pos.y, -p.pos.z))]
-        left =  [getattr(p, attr)[0] for p in sorted(self._face(LEFT),  key=lambda p: (-p.pos.y, p.pos.z))]
-        up =    [getattr(p, attr)[1] for p in sorted(self._face(UP),    key=lambda p: (p.pos.z, p.pos.x))]
-        down =  [getattr(p, attr)[1] for p in sorted(self._face(DOWN),  key=lambda p: (-p.pos.z, p.pos.x))]
+        left = [getattr(p, attr)[0] for p in sorted(self._face(LEFT), key=lambda p: (-p.pos.y, p.pos.z))]
+        up = [getattr(p, attr)[1] for p in sorted(self._face(UP), key=lambda p: (p.pos.z, p.pos.x))]
+        down = [getattr(p, attr)[1] for p in sorted(self._face(DOWN), key=lambda p: (-p.pos.z, p.pos.x))]
         front = [getattr(p, attr)[2] for p in sorted(self._face(FRONT), key=lambda p: (-p.pos.y, p.pos.x))]
-        back =  [getattr(p, attr)[2] for p in sorted(self._face(BACK),  key=lambda p: (-p.pos.y, -p.pos.x))]
+        back = [getattr(p, attr)[2] for p in sorted(self._face(BACK), key=lambda p: (-p.pos.y, -p.pos.x))]
 
-        return (up + left[0:3] + front[0:3] + right[0:3] + back[0:3]
-                + left[3:6] + front[3:6] + right[3:6] + back[3:6]
-                + left[6:9] + front[6:9] + right[6:9] + back[6:9] + down)
+        return (
+            up
+            + left[0:3]
+            + front[0:3]
+            + right[0:3]
+            + back[0:3]
+            + left[3:6]
+            + front[3:6]
+            + right[3:6]
+            + back[3:6]
+            + left[6:9]
+            + front[6:9]
+            + right[6:9]
+            + back[6:9]
+            + down
+        )
 
     def _color_list(self):
         return self._object_list("colors")
@@ -360,60 +465,68 @@ class Cube:
         return "".join(x for x in str(self) if x not in string.whitespace)
 
     def str_data(self):
-        template = ("    {}{}{}\n"
-                    "    {}{}{}\n"
-                    "    {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{} {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{} {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{} {}{}{}\n"
-                    "    {}{}{}\n"
-                    "    {}{}{}\n"
-                    "    {}{}{}")
+        template = (
+            "    {}{}{}\n"
+            "    {}{}{}\n"
+            "    {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{} {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{} {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{} {}{}{}\n"
+            "    {}{}{}\n"
+            "    {}{}{}\n"
+            "    {}{}{}"
+        )
 
         return "    " + template.format(*self._data_list()).strip()
 
     def rotate(self):
-        template = ("       {}{}{}\n"
-                    "       {}{}{}\n"
-                    "       {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{}\n"
-                    "       {}{}{}\n"
-                    "       {}{}{}\n"
-                    "       {}{}{}\n"
-                    "       {}{}{}\n"
-                    "       {}{}{}\n"
-                    "       {}{}{}")
+        template = (
+            "       {}{}{}\n"
+            "       {}{}{}\n"
+            "       {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{}\n"
+            "       {}{}{}\n"
+            "       {}{}{}\n"
+            "       {}{}{}\n"
+            "       {}{}{}\n"
+            "       {}{}{}\n"
+            "       {}{}{}"
+        )
 
         # Move around the elements in the data list to match this output
         data_list = self._data_list()
 
-
     def __str__(self):
-        template = ("    {}{}{}\n"
-                    "    {}{}{}\n"
-                    "    {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{} {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{} {}{}{}\n"
-                    "{}{}{} {}{}{} {}{}{} {}{}{}\n"
-                    "    {}{}{}\n"
-                    "    {}{}{}\n"
-                    "    {}{}{}")
+        template = (
+            "    {}{}{}\n"
+            "    {}{}{}\n"
+            "    {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{} {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{} {}{}{}\n"
+            "{}{}{} {}{}{} {}{}{} {}{}{}\n"
+            "    {}{}{}\n"
+            "    {}{}{}\n"
+            "    {}{}{}"
+        )
 
         return "    " + template.format(*self._color_list()).strip()
 
     def __repr__(self):
         return self.__str__()
 
-if __name__ == '__main__':
-    cube = Cube("    DLU\n"
-                "    RRD\n"
-                "    FFU\n"
-                "BBL DDR BRB LDL\n"
-                "RBF RUU LFB DDU\n"
-                "FBR BBR FUD FLU\n"
-                "    DLU\n"
-                "    ULF\n"
-                "    LFR")
+
+if __name__ == "__main__":
+    cube = Cube(
+        "    DLU\n"
+        "    RRD\n"
+        "    FFU\n"
+        "BBL DDR BRB LDL\n"
+        "RBF RUU LFB DDU\n"
+        "FBR BBR FUD FLU\n"
+        "    DLU\n"
+        "    ULF\n"
+        "    LFR"
+    )
     print(cube)

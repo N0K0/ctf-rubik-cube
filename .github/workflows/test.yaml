@@ -22,7 +22,7 @@ jobs:
           pip install ruff
           pip install -U -e .
       - name: Lint
-        run: ruff --format=github .
+        run: ruff format .
       - name: Unit test
         run: python tests/test.py
 

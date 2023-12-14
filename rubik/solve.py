@@ -8,7 +8,6 @@ DEBUG = False
 
 
 class Solver:
-
     def __init__(self, c):
         self.cube = c
         self.colors = c.colors()
@@ -26,21 +25,29 @@ class Solver:
         self.cube.sequence(" ".join(reversed_moves))
 
     def solve(self):
-        if DEBUG: print(self.cube)
+        if DEBUG:
+            print(self.cube)
         self.cross()
-        if DEBUG: print('Cross:\n', self.cube)
+        if DEBUG:
+            print("Cross:\n", self.cube)
         self.cross_corners()
-        if DEBUG: print('Corners:\n', self.cube)
+        if DEBUG:
+            print("Corners:\n", self.cube)
         self.second_layer()
-        if DEBUG: print('Second layer:\n', self.cube)
+        if DEBUG:
+            print("Second layer:\n", self.cube)
         self.back_face_edges()
-        if DEBUG: print('Last layer edges\n', self.cube)
+        if DEBUG:
+            print("Last layer edges\n", self.cube)
         self.last_layer_corners_position()
-        if DEBUG: print('Last layer corners -- position\n', self.cube)
+        if DEBUG:
+            print("Last layer corners -- position\n", self.cube)
         self.last_layer_corners_orientation()
-        if DEBUG: print('Last layer corners -- orientation\n', self.cube)
+        if DEBUG:
+            print("Last layer corners -- orientation\n", self.cube)
         self.last_layer_edges()
-        if DEBUG: print('Solved\n', self.cube)
+        if DEBUG:
+            print("Solved\n", self.cube)
 
     def imove(self, move_str):
         self.moves.insert(0, move_str)
@@ -51,7 +58,8 @@ class Solver:
         self.cube.sequence(move_str)
 
     def cross(self):
-        if DEBUG: print("cross")
+        if DEBUG:
+            print("cross")
         # place the UP-LEFT piece
         fl_piece = self.cube.find_piece(self.cube.front_color(), self.cube.left_color())
         fr_piece = self.cube.find_piece(self.cube.front_color(), self.cube.right_color())
@@ -68,8 +76,10 @@ class Solver:
 
     def _cross_left_or_right(self, edge_piece, face_piece, face_color, move_1, move_2):
         # don't do anything if piece is in correct place
-        if (edge_piece.pos == (face_piece.pos.x, face_piece.pos.y, 1)
-                and edge_piece.colors[2] == self.cube.front_color()):
+        if (
+            edge_piece.pos == (face_piece.pos.x, face_piece.pos.y, 1)
+            and edge_piece.colors[2] == self.cube.front_color()
+        ):
             return
 
         # ensure piece is at z = -1
@@ -116,7 +126,8 @@ class Solver:
             self.move(move_2)
 
     def cross_corners(self):
-        if DEBUG: print("cross_corners")
+        if DEBUG:
+            print("cross_corners")
         fld_piece = self.cube.find_piece(self.cube.front_color(), self.cube.left_color(), self.cube.down_color())
         flu_piece = self.cube.find_piece(self.cube.front_color(), self.cube.left_color(), self.cube.up_color())
         frd_piece = self.cube.find_piece(self.cube.front_color(), self.cube.right_color(), self.cube.down_color())
@@ -224,24 +235,32 @@ class Solver:
         #         BBB   BB-   BBB   -B-
         #         -B-   ---   ---   ---
         def state1():
-            return (self.cube[0, 1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[-1, 0, 1].colors[2] == self.cube.front_color() and
-                    self.cube[0, -1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[1, 0, 1].colors[2] == self.cube.front_color())
+            return (
+                self.cube[0, 1, 1].colors[2] == self.cube.front_color()
+                and self.cube[-1, 0, 1].colors[2] == self.cube.front_color()
+                and self.cube[0, -1, 1].colors[2] == self.cube.front_color()
+                and self.cube[1, 0, 1].colors[2] == self.cube.front_color()
+            )
 
         def state2():
-            return (self.cube[0, 1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[-1, 0, 1].colors[2] == self.cube.front_color())
+            return (
+                self.cube[0, 1, 1].colors[2] == self.cube.front_color()
+                and self.cube[-1, 0, 1].colors[2] == self.cube.front_color()
+            )
 
         def state3():
-            return (self.cube[-1, 0, 1].colors[2] == self.cube.front_color() and
-                    self.cube[1, 0, 1].colors[2] == self.cube.front_color())
+            return (
+                self.cube[-1, 0, 1].colors[2] == self.cube.front_color()
+                and self.cube[1, 0, 1].colors[2] == self.cube.front_color()
+            )
 
         def state4():
-            return (self.cube[0, 1, 1].colors[2] != self.cube.front_color() and
-                    self.cube[-1, 0, 1].colors[2] != self.cube.front_color() and
-                    self.cube[0, -1, 1].colors[2] != self.cube.front_color() and
-                    self.cube[1, 0, 1].colors[2] != self.cube.front_color())
+            return (
+                self.cube[0, 1, 1].colors[2] != self.cube.front_color()
+                and self.cube[-1, 0, 1].colors[2] != self.cube.front_color()
+                and self.cube[0, -1, 1].colors[2] != self.cube.front_color()
+                and self.cube[1, 0, 1].colors[2] != self.cube.front_color()
+            )
 
         count = 0
         while not state1():
@@ -305,48 +324,64 @@ class Solver:
         #         -B-B     BB-    -B-    -BB    BB-B  B-B-   B-B-B   BBB
         #         B          B    B B    B               B
         def state1():
-            return (self.cube[1, 1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[-1, -1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[0] == self.cube.front_color())
+            return (
+                self.cube[1, 1, 1].colors[1] == self.cube.front_color()
+                and self.cube[-1, -1, 1].colors[1] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[0] == self.cube.front_color()
+            )
 
         def state2():
-            return (self.cube[-1, 1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[1, 1, 1].colors[0] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[1] == self.cube.front_color())
+            return (
+                self.cube[-1, 1, 1].colors[1] == self.cube.front_color()
+                and self.cube[1, 1, 1].colors[0] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[1] == self.cube.front_color()
+            )
 
         def state3():
-            return (self.cube[-1, -1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[-1, 1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[1, 1, 1].colors[2] == self.cube.front_color())
+            return (
+                self.cube[-1, -1, 1].colors[1] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[1] == self.cube.front_color()
+                and self.cube[-1, 1, 1].colors[2] == self.cube.front_color()
+                and self.cube[1, 1, 1].colors[2] == self.cube.front_color()
+            )
 
         def state4():
-            return (self.cube[-1, 1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[-1, -1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[1, 1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[2] == self.cube.front_color())
+            return (
+                self.cube[-1, 1, 1].colors[1] == self.cube.front_color()
+                and self.cube[-1, -1, 1].colors[1] == self.cube.front_color()
+                and self.cube[1, 1, 1].colors[2] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[2] == self.cube.front_color()
+            )
 
         def state5():
-            return (self.cube[-1, 1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[0] == self.cube.front_color())
+            return (
+                self.cube[-1, 1, 1].colors[1] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[0] == self.cube.front_color()
+            )
 
         def state6():
-            return (self.cube[1, 1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[-1, -1, 1].colors[0] == self.cube.front_color() and
-                    self.cube[-1, 1, 1].colors[0] == self.cube.front_color())
+            return (
+                self.cube[1, 1, 1].colors[1] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[1] == self.cube.front_color()
+                and self.cube[-1, -1, 1].colors[0] == self.cube.front_color()
+                and self.cube[-1, 1, 1].colors[0] == self.cube.front_color()
+            )
 
         def state7():
-            return (self.cube[1, 1, 1].colors[0] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[0] == self.cube.front_color() and
-                    self.cube[-1, -1, 1].colors[0] == self.cube.front_color() and
-                    self.cube[-1, 1, 1].colors[0] == self.cube.front_color())
+            return (
+                self.cube[1, 1, 1].colors[0] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[0] == self.cube.front_color()
+                and self.cube[-1, -1, 1].colors[0] == self.cube.front_color()
+                and self.cube[-1, 1, 1].colors[0] == self.cube.front_color()
+            )
 
         def state8():
-            return (self.cube[1, 1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[1, -1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[-1, -1, 1].colors[2] == self.cube.front_color() and
-                    self.cube[-1, 1, 1].colors[2] == self.cube.front_color())
+            return (
+                self.cube[1, 1, 1].colors[2] == self.cube.front_color()
+                and self.cube[1, -1, 1].colors[2] == self.cube.front_color()
+                and self.cube[-1, -1, 1].colors[2] == self.cube.front_color()
+                and self.cube[-1, 1, 1].colors[2] == self.cube.front_color()
+            )
 
         move_1 = "Ri Fi R Fi Ri F F R F F "
         move_2 = "R F Ri F R F F Ri F F "
@@ -402,16 +437,20 @@ class Solver:
         #      ---            ---
         #              (aB edge on any FRONT)
         def state1():
-            return (bu_edge.colors[2] != self.cube.front_color() and
-                    bd_edge.colors[2] != self.cube.front_color() and
-                    bl_edge.colors[2] != self.cube.front_color() and
-                    br_edge.colors[2] != self.cube.front_color())
+            return (
+                bu_edge.colors[2] != self.cube.front_color()
+                and bd_edge.colors[2] != self.cube.front_color()
+                and bl_edge.colors[2] != self.cube.front_color()
+                and br_edge.colors[2] != self.cube.front_color()
+            )
 
         def state2():
-            return (bu_edge.colors[2] == self.cube.front_color() or
-                    bd_edge.colors[2] == self.cube.front_color() or
-                    bl_edge.colors[2] == self.cube.front_color() or
-                    br_edge.colors[2] == self.cube.front_color())
+            return (
+                bu_edge.colors[2] == self.cube.front_color()
+                or bd_edge.colors[2] == self.cube.front_color()
+                or bl_edge.colors[2] == self.cube.front_color()
+                or br_edge.colors[2] == self.cube.front_color()
+            )
 
         cycle_move = "R R F D Ui R R Di U F R R"
         h_pattern_move = "Ri S Ri Ri S S Ri Fi Fi R Si Si Ri Ri Si R Fi Fi "
@@ -424,22 +463,28 @@ class Solver:
             self._handle_last_layer_state2(br_edge, bl_edge, bu_edge, bd_edge, cycle_move)
 
         def h_pattern1():
-            return (self.cube[-1, 0, 1].colors[0] != self.cube.left_color() and
-                    self.cube[1, 0, 1].colors[0] != self.cube.right_color() and
-                    self.cube[0, -1, 1].colors[1] == self.cube.down_color() and
-                    self.cube[0, 1, 1].colors[1] == self.cube.up_color())
+            return (
+                self.cube[-1, 0, 1].colors[0] != self.cube.left_color()
+                and self.cube[1, 0, 1].colors[0] != self.cube.right_color()
+                and self.cube[0, -1, 1].colors[1] == self.cube.down_color()
+                and self.cube[0, 1, 1].colors[1] == self.cube.up_color()
+            )
 
         def h_pattern2():
-            return (self.cube[-1, 0, 1].colors[0] == self.cube.left_color() and
-                    self.cube[1, 0, 1].colors[0] == self.cube.right_color() and
-                    self.cube[0, -1, 1].colors[1] == self.cube.front_color() and
-                    self.cube[0, 1, 1].colors[1] == self.cube.front_color())
+            return (
+                self.cube[-1, 0, 1].colors[0] == self.cube.left_color()
+                and self.cube[1, 0, 1].colors[0] == self.cube.right_color()
+                and self.cube[0, -1, 1].colors[1] == self.cube.front_color()
+                and self.cube[0, 1, 1].colors[1] == self.cube.front_color()
+            )
 
         def fish_pattern():
-            return (self.cube[cube.FRONT + cube.DOWN].colors[2] == self.cube.down_color() and
-                    self.cube[cube.FRONT + cube.RIGHT].colors[2] == self.cube.right_color() and
-                    self.cube[cube.FRONT + cube.DOWN].colors[1] == self.cube.front_color() and
-                    self.cube[cube.FRONT + cube.RIGHT].colors[0] == self.cube.front_color())
+            return (
+                self.cube[cube.FRONT + cube.DOWN].colors[2] == self.cube.down_color()
+                and self.cube[cube.FRONT + cube.RIGHT].colors[2] == self.cube.right_color()
+                and self.cube[cube.FRONT + cube.DOWN].colors[1] == self.cube.front_color()
+                and self.cube[cube.FRONT + cube.RIGHT].colors[0] == self.cube.front_color()
+            )
 
         count = 0
         while not self.cube.is_solved():
@@ -464,7 +509,8 @@ class Solver:
         self.move("Xi Xi")
 
     def _handle_last_layer_state1(self, br_edge, bl_edge, bu_edge, bd_edge, cycle_move, h_move):
-        if DEBUG: print("_handle_last_layer_state1")
+        if DEBUG:
+            print("_handle_last_layer_state1")
 
         def check_edge_lr():
             return self.cube[cube.LEFT + cube.FRONT].colors[2] == self.cube.left_color()
@@ -482,7 +528,8 @@ class Solver:
             self.move("Fi")
 
     def _handle_last_layer_state2(self, br_edge, bl_edge, bu_edge, bd_edge, cycle_move):
-        if DEBUG: print("_handle_last_layer_state2")
+        if DEBUG:
+            print("_handle_last_layer_state2")
 
         def correct_edge():
             piece = self.cube[cube.LEFT + cube.FRONT]
@@ -517,7 +564,7 @@ class Solver:
         while edge.pos != Point(-1, 0, 1):
             self.move("Z")
 
-        assert self.cube[cube.LEFT + cube.FRONT].colors[2] == self.cube.front_color() and \
-               self.cube[cube.LEFT + cube.FRONT].colors[0] == self.cube.left_color()
-
-
+        assert (
+            self.cube[cube.LEFT + cube.FRONT].colors[2] == self.cube.front_color()
+            and self.cube[cube.LEFT + cube.FRONT].colors[0] == self.cube.left_color()
+        )

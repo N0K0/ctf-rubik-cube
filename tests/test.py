@@ -10,8 +10,7 @@ from rubik.solve import Solver
 from rubik.optimize import optimize_moves
 import rubik.optimize
 
-solved_cube_str = \
-"""    UUU
+solved_cube_str = """    UUU
     UUU
     UUU
 LLL FFF RRR BBB
@@ -21,8 +20,7 @@ LLL FFF RRR BBB
     DDD
     DDD"""
 
-debug_cube_str = \
-"""    012
+debug_cube_str = """    012
     345
     678
 9ab cde fgh ijk
@@ -34,7 +32,6 @@ xyz ABC DEF GHI
 
 
 class TestPoint(unittest.TestCase):
-
     def setUp(self):
         self.p = Point(1, 2, 3)
         self.q = Point(2, 5, 9)
@@ -121,17 +118,10 @@ class TestPoint(unittest.TestCase):
 
 
 class TestMatrix(unittest.TestCase):
-
     def setUp(self):
-        self.A = Matrix(1, 2, 3,
-                        4, 5, 6,
-                        7, 8, 9)
-        self.B = Matrix([9, 8, 7,
-                         6, 5, 4,
-                         3, 2, 1])
-        self.C = Matrix([[3, 2, 1],
-                         [6, 5, 4],
-                         [9, 8, 7]])
+        self.A = Matrix(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        self.B = Matrix([9, 8, 7, 6, 5, 4, 3, 2, 1])
+        self.C = Matrix([[3, 2, 1], [6, 5, 4], [9, 8, 7]])
 
         self.D = Matrix(x for x in range(11, 20))
         self.p = Point(1, 2, 3)
@@ -149,14 +139,10 @@ class TestMatrix(unittest.TestCase):
         self.assertEqual(self.D.vals, list(range(11, 20)))
 
     def test_matrix_str(self):
-        self.assertEqual(str(self.A), ("[1, 2, 3,\n"
-                                       " 4, 5, 6,\n"
-                                       " 7, 8, 9]"))
+        self.assertEqual(str(self.A), ("[1, 2, 3,\n" " 4, 5, 6,\n" " 7, 8, 9]"))
 
     def test_matrix_repr(self):
-        self.assertEqual(repr(self.A), ("Matrix(1, 2, 3,\n"
-                                        "       4, 5, 6,\n"
-                                        "       7, 8, 9)"))
+        self.assertEqual(repr(self.A), ("Matrix(1, 2, 3,\n" "       4, 5, 6,\n" "       7, 8, 9)"))
 
     def test_matrix_eq(self):
         self.assertEqual(self.A, self.A)
@@ -190,7 +176,6 @@ class TestMatrix(unittest.TestCase):
 
 
 class TestCube(unittest.TestCase):
-
     def setUp(self):
         self.solved_cube = Cube(solved_cube_str)
         self.debug_cube = Cube(debug_cube_str)
@@ -229,346 +214,396 @@ class TestCube(unittest.TestCase):
 
     def test_cube_L(self):
         self.debug_cube.L()
-        self.assertEqual("    I12\n"
-                         "    w45\n"
-                         "    k78\n"
-                         "xl9 0de fgh ijP\n"
-                         "yma 3pq rst uvM\n"
-                         "znb 6BC DEF GHJ\n"
-                         "    cKL\n"
-                         "    oNO\n"
-                         "    AQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    I12\n"
+            "    w45\n"
+            "    k78\n"
+            "xl9 0de fgh ijP\n"
+            "yma 3pq rst uvM\n"
+            "znb 6BC DEF GHJ\n"
+            "    cKL\n"
+            "    oNO\n"
+            "    AQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_Li(self):
         self.debug_cube.Li()
-        self.assertEqual("    c12\n"
-                         "    o45\n"
-                         "    A78\n"
-                         "bnz Jde fgh ij6\n"
-                         "amy Mpq rst uv3\n"
-                         "9lx PBC DEF GH0\n"
-                         "    IKL\n"
-                         "    wNO\n"
-                         "    kQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    c12\n"
+            "    o45\n"
+            "    A78\n"
+            "bnz Jde fgh ij6\n"
+            "amy Mpq rst uv3\n"
+            "9lx PBC DEF GH0\n"
+            "    IKL\n"
+            "    wNO\n"
+            "    kQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_R(self):
         self.debug_cube.R()
-        self.assertEqual("    01e\n"
-                         "    34q\n"
-                         "    67C\n"
-                         "9ab cdL Drf 8jk\n"
-                         "lmn opO Esg 5vw\n"
-                         "xyz ABR Fth 2HI\n"
-                         "    JKG\n"
-                         "    MNu\n"
-                         "    PQi",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    01e\n"
+            "    34q\n"
+            "    67C\n"
+            "9ab cdL Drf 8jk\n"
+            "lmn opO Esg 5vw\n"
+            "xyz ABR Fth 2HI\n"
+            "    JKG\n"
+            "    MNu\n"
+            "    PQi",
+            str(self.debug_cube),
+        )
 
     def test_cube_Ri(self):
         self.debug_cube.Ri()
-        self.assertEqual("    01G\n"
-                         "    34u\n"
-                         "    67i\n"
-                         "9ab cd2 htF Rjk\n"
-                         "lmn op5 gsE Ovw\n"
-                         "xyz AB8 frD LHI\n"
-                         "    JKe\n"
-                         "    MNq\n"
-                         "    PQC",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    01G\n"
+            "    34u\n"
+            "    67i\n"
+            "9ab cd2 htF Rjk\n"
+            "lmn op5 gsE Ovw\n"
+            "xyz AB8 frD LHI\n"
+            "    JKe\n"
+            "    MNq\n"
+            "    PQC",
+            str(self.debug_cube),
+        )
 
     def test_cube_U(self):
         self.debug_cube.U()
-        self.assertEqual("    630\n"
-                         "    741\n"
-                         "    852\n"
-                         "cde fgh ijk 9ab\n"
-                         "lmn opq rst uvw\n"
-                         "xyz ABC DEF GHI\n"
-                         "    JKL\n"
-                         "    MNO\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    630\n"
+            "    741\n"
+            "    852\n"
+            "cde fgh ijk 9ab\n"
+            "lmn opq rst uvw\n"
+            "xyz ABC DEF GHI\n"
+            "    JKL\n"
+            "    MNO\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_Ui(self):
         self.debug_cube.Ui()
-        self.assertEqual("    258\n"
-                         "    147\n"
-                         "    036\n"
-                         "ijk 9ab cde fgh\n"
-                         "lmn opq rst uvw\n"
-                         "xyz ABC DEF GHI\n"
-                         "    JKL\n"
-                         "    MNO\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    258\n"
+            "    147\n"
+            "    036\n"
+            "ijk 9ab cde fgh\n"
+            "lmn opq rst uvw\n"
+            "xyz ABC DEF GHI\n"
+            "    JKL\n"
+            "    MNO\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_D(self):
         self.debug_cube.D()
-        self.assertEqual("    012\n"
-                         "    345\n"
-                         "    678\n"
-                         "9ab cde fgh ijk\n"
-                         "lmn opq rst uvw\n"
-                         "GHI xyz ABC DEF\n"
-                         "    PMJ\n"
-                         "    QNK\n"
-                         "    ROL",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    345\n"
+            "    678\n"
+            "9ab cde fgh ijk\n"
+            "lmn opq rst uvw\n"
+            "GHI xyz ABC DEF\n"
+            "    PMJ\n"
+            "    QNK\n"
+            "    ROL",
+            str(self.debug_cube),
+        )
 
     def test_cube_Di(self):
         self.debug_cube.Di()
-        self.assertEqual("    012\n"
-                         "    345\n"
-                         "    678\n"
-                         "9ab cde fgh ijk\n"
-                         "lmn opq rst uvw\n"
-                         "ABC DEF GHI xyz\n"
-                         "    LOR\n"
-                         "    KNQ\n"
-                         "    JMP",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    345\n"
+            "    678\n"
+            "9ab cde fgh ijk\n"
+            "lmn opq rst uvw\n"
+            "ABC DEF GHI xyz\n"
+            "    LOR\n"
+            "    KNQ\n"
+            "    JMP",
+            str(self.debug_cube),
+        )
 
     def test_cube_F(self):
         self.debug_cube.F()
-        self.assertEqual("    012\n"
-                         "    345\n"
-                         "    znb\n"
-                         "9aJ Aoc 6gh ijk\n"
-                         "lmK Bpd 7st uvw\n"
-                         "xyL Cqe 8EF GHI\n"
-                         "    Drf\n"
-                         "    MNO\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    345\n"
+            "    znb\n"
+            "9aJ Aoc 6gh ijk\n"
+            "lmK Bpd 7st uvw\n"
+            "xyL Cqe 8EF GHI\n"
+            "    Drf\n"
+            "    MNO\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_Fi(self):
         self.debug_cube.Fi()
-        self.assertEqual("    012\n"
-                         "    345\n"
-                         "    frD\n"
-                         "9a8 eqC Lgh ijk\n"
-                         "lm7 dpB Kst uvw\n"
-                         "xy6 coA JEF GHI\n"
-                         "    bnz\n"
-                         "    MNO\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    345\n"
+            "    frD\n"
+            "9a8 eqC Lgh ijk\n"
+            "lm7 dpB Kst uvw\n"
+            "xy6 coA JEF GHI\n"
+            "    bnz\n"
+            "    MNO\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_B(self):
         self.debug_cube.B()
-        self.assertEqual("    htF\n"
-                         "    345\n"
-                         "    678\n"
-                         "2ab cde fgR Gui\n"
-                         "1mn opq rsQ Hvj\n"
-                         "0yz ABC DEP Iwk\n"
-                         "    JKL\n"
-                         "    MNO\n"
-                         "    9lx",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    htF\n"
+            "    345\n"
+            "    678\n"
+            "2ab cde fgR Gui\n"
+            "1mn opq rsQ Hvj\n"
+            "0yz ABC DEP Iwk\n"
+            "    JKL\n"
+            "    MNO\n"
+            "    9lx",
+            str(self.debug_cube),
+        )
 
     def test_cube_Bi(self):
         self.debug_cube.Bi()
-        self.assertEqual("    xl9\n"
-                         "    345\n"
-                         "    678\n"
-                         "Pab cde fg0 kwI\n"
-                         "Qmn opq rs1 jvH\n"
-                         "Ryz ABC DE2 iuG\n"
-                         "    JKL\n"
-                         "    MNO\n"
-                         "    Fth",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    xl9\n"
+            "    345\n"
+            "    678\n"
+            "Pab cde fg0 kwI\n"
+            "Qmn opq rs1 jvH\n"
+            "Ryz ABC DE2 iuG\n"
+            "    JKL\n"
+            "    MNO\n"
+            "    Fth",
+            str(self.debug_cube),
+        )
 
     def test_cube_M(self):
         self.debug_cube.M()
-        self.assertEqual("    0H2\n"
-                         "    3v5\n"
-                         "    6j8\n"
-                         "9ab c1e fgh iQk\n"
-                         "lmn o4q rst uNw\n"
-                         "xyz A7C DEF GKI\n"
-                         "    JdL\n"
-                         "    MpO\n"
-                         "    PBR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    0H2\n"
+            "    3v5\n"
+            "    6j8\n"
+            "9ab c1e fgh iQk\n"
+            "lmn o4q rst uNw\n"
+            "xyz A7C DEF GKI\n"
+            "    JdL\n"
+            "    MpO\n"
+            "    PBR",
+            str(self.debug_cube),
+        )
 
     def test_cube_Mi(self):
         self.debug_cube.Mi()
-        self.assertEqual("    0d2\n"
-                         "    3p5\n"
-                         "    6B8\n"
-                         "9ab cKe fgh i7k\n"
-                         "lmn oNq rst u4w\n"
-                         "xyz AQC DEF G1I\n"
-                         "    JHL\n"
-                         "    MvO\n"
-                         "    PjR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    0d2\n"
+            "    3p5\n"
+            "    6B8\n"
+            "9ab cKe fgh i7k\n"
+            "lmn oNq rst u4w\n"
+            "xyz AQC DEF G1I\n"
+            "    JHL\n"
+            "    MvO\n"
+            "    PjR",
+            str(self.debug_cube),
+        )
 
     def test_cube_E(self):
         self.debug_cube.E()
-        self.assertEqual("    012\n"
-                         "    345\n"
-                         "    678\n"
-                         "9ab cde fgh ijk\n"
-                         "uvw lmn opq rst\n"
-                         "xyz ABC DEF GHI\n"
-                         "    JKL\n"
-                         "    MNO\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    345\n"
+            "    678\n"
+            "9ab cde fgh ijk\n"
+            "uvw lmn opq rst\n"
+            "xyz ABC DEF GHI\n"
+            "    JKL\n"
+            "    MNO\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_Ei(self):
         self.debug_cube.Ei()
-        self.assertEqual("    012\n"
-                         "    345\n"
-                         "    678\n"
-                         "9ab cde fgh ijk\n"
-                         "opq rst uvw lmn\n"
-                         "xyz ABC DEF GHI\n"
-                         "    JKL\n"
-                         "    MNO\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    345\n"
+            "    678\n"
+            "9ab cde fgh ijk\n"
+            "opq rst uvw lmn\n"
+            "xyz ABC DEF GHI\n"
+            "    JKL\n"
+            "    MNO\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_S(self):
         self.debug_cube.S()
-        self.assertEqual("    012\n"
-                         "    yma\n"
-                         "    678\n"
-                         "9Mb cde f3h ijk\n"
-                         "lNn opq r4t uvw\n"
-                         "xOz ABC D5F GHI\n"
-                         "    JKL\n"
-                         "    Esg\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    yma\n"
+            "    678\n"
+            "9Mb cde f3h ijk\n"
+            "lNn opq r4t uvw\n"
+            "xOz ABC D5F GHI\n"
+            "    JKL\n"
+            "    Esg\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_Si(self):
         self.debug_cube.Si()
-        self.assertEqual("    012\n"
-                         "    gsE\n"
-                         "    678\n"
-                         "95b cde fOh ijk\n"
-                         "l4n opq rNt uvw\n"
-                         "x3z ABC DMF GHI\n"
-                         "    JKL\n"
-                         "    amy\n"
-                         "    PQR",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    012\n"
+            "    gsE\n"
+            "    678\n"
+            "95b cde fOh ijk\n"
+            "l4n opq rNt uvw\n"
+            "x3z ABC DMF GHI\n"
+            "    JKL\n"
+            "    amy\n"
+            "    PQR",
+            str(self.debug_cube),
+        )
 
     def test_cube_X(self):
         self.debug_cube.X()
-        self.assertEqual("    cde\n"
-                         "    opq\n"
-                         "    ABC\n"
-                         "bnz JKL Drf 876\n"
-                         "amy MNO Esg 543\n"
-                         "9lx PQR Fth 210\n"
-                         "    IHG\n"
-                         "    wvu\n"
-                         "    kji",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    cde\n"
+            "    opq\n"
+            "    ABC\n"
+            "bnz JKL Drf 876\n"
+            "amy MNO Esg 543\n"
+            "9lx PQR Fth 210\n"
+            "    IHG\n"
+            "    wvu\n"
+            "    kji",
+            str(self.debug_cube),
+        )
 
     def test_cube_Xi(self):
         self.debug_cube.Xi()
-        self.assertEqual("    IHG\n"
-                         "    wvu\n"
-                         "    kji\n"
-                         "xl9 012 htF RQP\n"
-                         "yma 345 gsE ONM\n"
-                         "znb 678 frD LKJ\n"
-                         "    cde\n"
-                         "    opq\n"
-                         "    ABC",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    IHG\n"
+            "    wvu\n"
+            "    kji\n"
+            "xl9 012 htF RQP\n"
+            "yma 345 gsE ONM\n"
+            "znb 678 frD LKJ\n"
+            "    cde\n"
+            "    opq\n"
+            "    ABC",
+            str(self.debug_cube),
+        )
 
     def test_cube_Y(self):
         self.debug_cube.Y()
-        self.assertEqual("    630\n"
-                         "    741\n"
-                         "    852\n"
-                         "cde fgh ijk 9ab\n"
-                         "opq rst uvw lmn\n"
-                         "ABC DEF GHI xyz\n"
-                         "    LOR\n"
-                         "    KNQ\n"
-                         "    JMP",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    630\n"
+            "    741\n"
+            "    852\n"
+            "cde fgh ijk 9ab\n"
+            "opq rst uvw lmn\n"
+            "ABC DEF GHI xyz\n"
+            "    LOR\n"
+            "    KNQ\n"
+            "    JMP",
+            str(self.debug_cube),
+        )
 
     def test_cube_Yi(self):
         self.debug_cube.Yi()
-        self.assertEqual("    258\n"
-                         "    147\n"
-                         "    036\n"
-                         "ijk 9ab cde fgh\n"
-                         "uvw lmn opq rst\n"
-                         "GHI xyz ABC DEF\n"
-                         "    PMJ\n"
-                         "    QNK\n"
-                         "    ROL",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    258\n"
+            "    147\n"
+            "    036\n"
+            "ijk 9ab cde fgh\n"
+            "uvw lmn opq rst\n"
+            "GHI xyz ABC DEF\n"
+            "    PMJ\n"
+            "    QNK\n"
+            "    ROL",
+            str(self.debug_cube),
+        )
 
     def test_cube_Z(self):
         self.debug_cube.Z()
-        self.assertEqual("    xl9\n"
-                         "    yma\n"
-                         "    znb\n"
-                         "PMJ Aoc 630 kwI\n"
-                         "QNK Bpd 741 jvH\n"
-                         "ROL Cqe 852 iuG\n"
-                         "    Drf\n"
-                         "    Esg\n"
-                         "    Fth",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    xl9\n"
+            "    yma\n"
+            "    znb\n"
+            "PMJ Aoc 630 kwI\n"
+            "QNK Bpd 741 jvH\n"
+            "ROL Cqe 852 iuG\n"
+            "    Drf\n"
+            "    Esg\n"
+            "    Fth",
+            str(self.debug_cube),
+        )
 
     def test_cube_Zi(self):
         self.debug_cube.Zi()
-        self.assertEqual("    htF\n"
-                         "    gsE\n"
-                         "    frD\n"
-                         "258 eqC LOR Gui\n"
-                         "147 dpB KNQ Hvj\n"
-                         "036 coA JMP Iwk\n"
-                         "    bnz\n"
-                         "    amy\n"
-                         "    9lx",
-                         str(self.debug_cube))
+        self.assertEqual(
+            "    htF\n"
+            "    gsE\n"
+            "    frD\n"
+            "258 eqC LOR Gui\n"
+            "147 dpB KNQ Hvj\n"
+            "036 coA JMP Iwk\n"
+            "    bnz\n"
+            "    amy\n"
+            "    9lx",
+            str(self.debug_cube),
+        )
 
     def test_cube_find_face_piece(self):
-        piece = self.debug_cube.find_piece('p')
+        piece = self.debug_cube.find_piece("p")
         self.assertEqual(cube.FACE, piece.type)
         self.assertEqual(cube.FRONT, piece.pos)
-        self.assertEqual([None, None, 'p'], piece.colors)
+        self.assertEqual([None, None, "p"], piece.colors)
 
     def test_cube_find_edge_piece(self):
         def _check_piece(piece):
             self.assertEqual(cube.EDGE, piece.type)
             self.assertEqual(cube.FRONT + cube.UP, piece.pos)
-            self.assertEqual([None, '7', 'd'], piece.colors)
-        _check_piece(self.debug_cube.find_piece('d', '7'))
-        _check_piece(self.debug_cube.find_piece('7', 'd'))
+            self.assertEqual([None, "7", "d"], piece.colors)
+
+        _check_piece(self.debug_cube.find_piece("d", "7"))
+        _check_piece(self.debug_cube.find_piece("7", "d"))
 
     def test_cube_find_corner_piece(self):
         def _check_piece(piece):
             self.assertEqual(cube.CORNER, piece.type)
             self.assertEqual(cube.FRONT + cube.UP + cube.LEFT, piece.pos)
-            self.assertEqual(['b', '6', 'c'], piece.colors)
-        for colors in itertools.permutations(('b', '6', 'c')):
+            self.assertEqual(["b", "6", "c"], piece.colors)
+
+        for colors in itertools.permutations(("b", "6", "c")):
             _check_piece(self.debug_cube.find_piece(*colors))
 
     def test_cube_find_face_piece_negative(self):
-        self.assertIsNone(self.debug_cube.find_piece('7'))
+        self.assertIsNone(self.debug_cube.find_piece("7"))
 
     def test_cube_find_edge_piece_negative(self):
-        self.assertIsNone(self.debug_cube.find_piece('o', 'q'))
+        self.assertIsNone(self.debug_cube.find_piece("o", "q"))
 
     def test_cube_find_corner_piece_negative(self):
-        self.assertIsNone(self.debug_cube.find_piece('c', '6', '9'))
+        self.assertIsNone(self.debug_cube.find_piece("c", "6", "9"))
 
     def test_cube_is_solved(self):
         self.assertTrue(self.solved_cube.is_solved())
@@ -580,19 +615,21 @@ class TestCube(unittest.TestCase):
 
     def test_cube_sequence(self):
         self.solved_cube.sequence("L U M Ri X E Xi Ri D D F F Bi")
-        self.assertEqual("    DLU\n"
-                         "    RRD\n"
-                         "    FFU\n"
-                         "BBL DDR BRB LDL\n"
-                         "RBF RUU LFB DDU\n"
-                         "FBR BBR FUD FLU\n"
-                         "    DLU\n"
-                         "    ULF\n"
-                         "    LFR",
-                         str(self.solved_cube))
+        self.assertEqual(
+            "    DLU\n"
+            "    RRD\n"
+            "    FFU\n"
+            "BBL DDR BRB LDL\n"
+            "RBF RUU LFB DDU\n"
+            "FBR BBR FUD FLU\n"
+            "    DLU\n"
+            "    ULF\n"
+            "    LFR",
+            str(self.solved_cube),
+        )
 
     def test_cube_colors(self):
-        self.assertEqual({'U', 'D', 'F', 'B', 'L', 'R'}, self.solved_cube.colors())
+        self.assertEqual({"U", "D", "F", "B", "L", "R"}, self.solved_cube.colors())
         debug_colors = set()
         debug_colors.update(c for c in debug_cube_str if c not in string.whitespace)
         self.assertEqual(debug_colors, self.debug_cube.colors())
@@ -613,8 +650,8 @@ class TestCube(unittest.TestCase):
         self.assertEqual(cube.FRONT, piece.pos)
 
     def test_move_and_inverse(self):
-        for name in ('R', 'L', 'U', 'D', 'F', 'B', 'M', 'E', 'S', 'X', 'Y', 'Z'):
-            move, unmove = getattr(Cube, name), getattr(Cube, name + 'i')
+        for name in ("R", "L", "U", "D", "F", "B", "M", "E", "S", "X", "Y", "Z"):
+            move, unmove = getattr(Cube, name), getattr(Cube, name + "i")
             self._check_move_and_inverse(move, unmove, self.debug_cube)
 
     def _check_move_and_inverse(self, move, inverse, cube):
@@ -630,13 +667,12 @@ class TestCube(unittest.TestCase):
 
 
 class TestSolver(unittest.TestCase):
-
     cubes = [
         "DLURRDFFUBBLDDRBRBLDLRBFRUULFBDDUFBRBBRFUDFLUDLUULFLFR",
         "GGBYOBWBBBOYRGYOYOGWROWYWGWRBRGYBGOOGBBYOYORWWRRGRWRYW",
         "BYOYYRGOWRROWGOYWGBBGOROBWGWORBBWRWYRGYBGYWOGBROYGBWYR",
         "YWYYGWWGYBBYRRBRGWOOOYWRWRBOBYROWRGOBGRWOGWBBGBGOYYGRO",
-        "ROORRYOWBWWGBYGRRBYBGGGGWWOYYBRBOWBYRWOGBYORYBOWYOGRGW"
+        "ROORRYOWBWWGBYGRRBYBGGGGWWOYYBRBOWBYRWOGBYORYBOWYOGRGW",
     ]
 
     unsolvable_cubes = [
@@ -669,28 +705,36 @@ class TestSolver(unittest.TestCase):
         solver = Solver(c)
         self.assertRaisesRegex(Exception, "Stuck in loop - unsolvable cube", solver.solve)
 
-class TestOptimize(unittest.TestCase):
 
-    moves = (('R', 'Ri'), ('L', 'Li'), ('U', 'Ui'), ('D', 'Di'), ('F', 'Fi'), ('B', 'Bi'),
-             ('M', 'Mi'), ('E', 'Ei'), ('S', 'Si'), ('X', 'Xi'), ('Y', 'Yi'), ('Z', 'Zi'))
+class TestOptimize(unittest.TestCase):
+    moves = (
+        ("R", "Ri"),
+        ("L", "Li"),
+        ("U", "Ui"),
+        ("D", "Di"),
+        ("F", "Fi"),
+        ("B", "Bi"),
+        ("M", "Mi"),
+        ("E", "Ei"),
+        ("S", "Si"),
+        ("X", "Xi"),
+        ("Y", "Yi"),
+        ("Z", "Zi"),
+    )
 
     def test_optimize_repeat_three(self):
         for cw, cc in self.moves:
             self.assertEqual([cc], optimize_moves([cw, cw, cw]))
             self.assertEqual([cw], optimize_moves([cc, cc, cc]))
-            self.assertEqual(['_', cw], optimize_moves(['_', cc, cc, cc]))
-            self.assertEqual(['_', cc], optimize_moves(['_', cw, cw, cw]))
-            self.assertEqual(['_', cw, '_'], optimize_moves(['_', cc, cc, cc, '_']))
-            self.assertEqual(['_', cc, '_'], optimize_moves(['_', cw, cw, cw, '_']))
+            self.assertEqual(["_", cw], optimize_moves(["_", cc, cc, cc]))
+            self.assertEqual(["_", cc], optimize_moves(["_", cw, cw, cw]))
+            self.assertEqual(["_", cw, "_"], optimize_moves(["_", cc, cc, cc, "_"]))
+            self.assertEqual(["_", cc, "_"], optimize_moves(["_", cw, cw, cw, "_"]))
 
-            self.assertEqual([cw, cw],
-                              optimize_moves([cc,cc,cc, cc,cc,cc]))
-            self.assertEqual([cw, cw, '_'],
-                              optimize_moves([cc,cc,cc, cc,cc,cc, '_']))
-            self.assertEqual([cw, cw, '_', '_'],
-                              optimize_moves([cc,cc,cc, cc,cc,cc, '_','_']))
-            self.assertEqual([cc],
-                              optimize_moves([cc,cc,cc, cc,cc,cc, cc,cc,cc]))
+            self.assertEqual([cw, cw], optimize_moves([cc, cc, cc, cc, cc, cc]))
+            self.assertEqual([cw, cw, "_"], optimize_moves([cc, cc, cc, cc, cc, cc, "_"]))
+            self.assertEqual([cw, cw, "_", "_"], optimize_moves([cc, cc, cc, cc, cc, cc, "_", "_"]))
+            self.assertEqual([cc], optimize_moves([cc, cc, cc, cc, cc, cc, cc, cc, cc]))
 
     def test_optimize_do_undo(self):
         for cw, cc in self.moves:
@@ -701,18 +745,18 @@ class TestOptimize(unittest.TestCase):
             self.assertEqual([], optimize_moves([cw, cw, cw, cc, cc, cc]))
             self.assertEqual([], optimize_moves([cw, cw, cw, cw, cc, cc, cc, cc]))
 
-            self.assertEqual(['1', '2'], optimize_moves(['1', cw, cw, cc, cc, '2']))
-            self.assertEqual(['1', '2', '3', '4'], optimize_moves(['1', '2', cw, cw, cc, cc, '3', '4']))
+            self.assertEqual(["1", "2"], optimize_moves(["1", cw, cw, cc, cc, "2"]))
+            self.assertEqual(["1", "2", "3", "4"], optimize_moves(["1", "2", cw, cw, cc, cc, "3", "4"]))
 
     def test_full_cube_rotation_optimization(self):
-        for cw, cc in (('X', 'Xi'), ('Y', 'Yi'), ('Z', 'Zi')):
+        for cw, cc in (("X", "Xi"), ("Y", "Yi"), ("Z", "Zi")):
             for moves in ([cc, cw], [cw, cc]):
                 rubik.optimize.apply_no_full_cube_rotation_optimization(moves)
                 self.assertEqual([], moves)
 
-        for cw, cc in (('Z', 'Zi'),):
-            moves = [cw, 'U', 'L', 'D', 'R','E', 'M', cc]
-            expected = ['L', 'D', 'R', 'U', 'Mi', 'E']
+        for cw, cc in (("Z", "Zi"),):
+            moves = [cw, "U", "L", "D", "R", "E", "M", cc]
+            expected = ["L", "D", "R", "U", "Mi", "E"]
             actual = list(moves)
             rubik.optimize.apply_no_full_cube_rotation_optimization(actual)
             self.assertEqual(expected, actual)
@@ -722,8 +766,8 @@ class TestOptimize(unittest.TestCase):
             d.sequence(" ".join(actual))
             self.assertEqual(str(c), str(d))
 
-            moves = [cw, cw, 'U', 'L', 'D', 'R','E', 'M', cc, cc]
-            expected = ['D', 'R', 'U', 'L', 'Ei', 'Mi']
+            moves = [cw, cw, "U", "L", "D", "R", "E", "M", cc, cc]
+            expected = ["D", "R", "U", "L", "Ei", "Mi"]
             actual = list(moves)
             rubik.optimize.apply_no_full_cube_rotation_optimization(actual)
             self.assertEqual(expected, actual)
@@ -734,5 +778,5 @@ class TestOptimize(unittest.TestCase):
             self.assertEqual(str(c), str(d))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

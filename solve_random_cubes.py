@@ -47,11 +47,13 @@ def run():
         total = successes + failures
         if total == 1 or total % 100 == 0:
             pass_percentage = 100 * successes / total
-            print(f"{total}: {successes} successes ({pass_percentage:0.3f}% passing)"
-                  f" avg_moves={avg_moves:0.3f} avg_opt_moves={avg_opt_moves:0.3f}"
-                  f" avg_time={avg_time:0.3f}s")
+            print(
+                f"{total}: {successes} successes ({pass_percentage:0.3f}% passing)"
+                f" avg_moves={avg_moves:0.3f} avg_opt_moves={avg_opt_moves:0.3f}"
+                f" avg_time={avg_time:0.3f}s"
+            )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     solve.DEBUG = False
     run()
