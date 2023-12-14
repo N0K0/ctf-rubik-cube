@@ -143,6 +143,49 @@ _DU _SO ESP UK_
 As you can try to read out: 'PAPA{FLAGS_ARE_FUN}'
 ```
 
+# Solve for target pattern:
+
+```python
+from rubik import cube
+from rubik.solve import Solver
+from solve_random_cubes import random_cube
+
+def solve_for_target():
+    base_str = random_cube().flat_str()
+    target_str = random_cube().flat_str()
+
+    print(f"Base: {base_str}")
+    print(f"Target: {target_str}")
+
+    c_root = cube.Cube(base_str)
+    c_target = cube.Cube(target_str)
+
+    print("Initial:")
+    print(c_root, end="\n\n")
+
+    solver = Solver(c_root)
+    solver.solve()
+
+    solver_t = Solver(c_target)
+    solver_t.solve()
+
+    # Generate new cube
+    c = cube.Cube(base_str)
+    # Solve to base state
+    c.sequence(" ".join(solver.moves))
+    print(c)
+    
+    # Solve to target state, but inversing a solve to base state from the target
+    c.inverse_sequence(" ".join(solver_t.moves))
+
+    print("Solved:")
+    print(c, end="\n\n")
+
+if __name__ == '__main__':
+    solve_for_target()
+
+```
+
 
 ## Implementation
 
