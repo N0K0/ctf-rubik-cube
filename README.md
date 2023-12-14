@@ -1,5 +1,7 @@
-![PyPI](https://img.shields.io/pypi/v/rubik-cube)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rubik-cube)
+![PyPI](https://img.shields.io/pypi/v/ctf-rubik-cube)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ctf-rubik-cube)
+
+**Forked from https://github.com/pglass/cube, this would not be possible without his work. <3**
 
 # Overview
 
@@ -12,20 +14,28 @@ It contains:
 - An unintelligent solution sequence optimizer
 - A decent set of test cases
 
+On top of that, this CTF fork contains:
+- An extension of the cube that allows each piece to contain a piece of data (like a character)
+- No new tests!
+- A move inverter, to move us into an arbitrary state
+
 ## Installation
 
 The package is hosted on PyPI.
-
 ```
-pip install rubik-cube
+pip install ctf-rubik-cube
 ```
 
-Import from the `rubik` package,
+
+# Example Usage
 
 ```python
->>> from rubik.cube import Cube
->>> c = Cube("OOOOOOOOOYYYWWWGGGBBBYYYWWWGGGBBBYYYWWWGGGBBBRRRRRRRRR")
->>> print(c)
+from rubik.cube import Cube
+c = Cube("OOOOOOOOOYYYWWWGGGBBBYYYWWWGGGBBBYYYWWWGGGBBBRRRRRRRRR")
+print(c)
+```
+
+```
     OOO
     OOO
     OOO
@@ -36,12 +46,109 @@ YYY WWW GGG BBB
     RRR
     RRR
 ```
+
+```python
+
+from rubik import cube
+from rubik.solve import Solver
+
+
+def solve_with_data():
+
+    """
+    cube_str looks like:
+        UUU                       0  1  2
+        UUU                       3  4  5
+        UUU                       6  7  8
+    LLL FFF RRR BBB      9 10 11 12 13 14 15 16 17 18 19 20
+    LLL FFF RRR BBB     21 22 23 24 25 26 27 28 29 30 31 32
+    LLL FFF RRR BBB     33 34 35 36 37 38 39 40 41 42 43 44
+        DDD                      45 46 47
+        DDD                      48 49 50
+        DDD                      51 52 53
+    """
+
+    # Note that the middle piece can be arbitrary, not locked to ULFRBD
+    # Using colors here for readability, but you can use any string
+    start_str = "BBWOGYWGRYGGRYGYROGWRGRRWWOYORBYRBOYOWRWGOBBYGOBBBWOYW"
+    data_str = "{LOLS_SLWCS_A?REBLE}RAOPGNKKØGFEP__URSAAUIUO_PLLDOEXB_"
+
+    c_root = cube.Cube(start_str, data_str)
+    print("Initial colors:")
+    print(c_root, end="\n\n")
+    print("Initial data:")
+    print(c_root.str_data(), end="\n\n")
+
+    solver = Solver(c_root)
+    solver.solve()
+
+    print("Solved colors:")
+    print(c_root, end="\n\n")
+
+    print("Solved data:")
+    print(c_root.str_data(), end="\n\n")
+
+    print("As you can try to read out: 'PAPA{FLAGS_ARE_FUN}'")
+
+
+if __name__ == '__main__':
+    solve_with_data()
+```
+
+```
+Initial colors:
+    BBW
+    OGY
+    WGR
+YGG RYG YRO GWR
+GRR WWO YOR BYR
+BOY OWR WGO BBY
+    GOB
+    BBW
+    OYW
+
+Initial data:
+    {LO
+    LS_
+    SLW
+CS_ A?R EBL E}R
+AOP GNK KØG FEP
+__U RSA AUI UO_
+    PLL
+    DOE
+    XB_
+
+Solved colors:
+    RRR
+    RRR
+    RRR
+BBB WWW GGG YYY
+BBB WWW GGG YYY
+BBB WWW GGG YYY
+    OOO
+    OOO
+    OOO
+
+Solved data:
+    RBW
+    GOP
+    APA
+{FL AGS _AR E_C
+OOL }NE USL ?EB
+_DU _SO ESP UK_
+    ILL
+    _ØL
+    XKR
+
+As you can try to read out: 'PAPA{FLAGS_ARE_FUN}'
+```
+
 
 ## Implementation
 
 ### Piece
 
-The cornerstone of this implementation is the Piece class. A Piece stores two
+The cornerstone of this implementation is the Piece class. A Piece stores three
 pieces of information:
 
 1. An integer `position` vector `(x, y, z)` where each component is in {-1, 0,
@@ -58,6 +165,8 @@ example, a Piece with `colors=('Orange', None, 'Red')` is an edge piece with an
 z-direction. The Piece doesn't know or care which direction along the x-axis
 the `'Orange'` sticker is facing, just that it is facing in the x-direction and
 not the y- or z- directions.
+
+3. A `data` vector `(dx, dy, dz)`, giving the data of the sticker along each axis
 
 Using the combination of `position` and `color` vectors makes it easy to
 identify any Piece by its absolute position or by its unique combination of

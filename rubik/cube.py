@@ -246,77 +246,30 @@ class Cube:
             piece.rotate(matrix)
 
     # Rubik's Cube Notation: http://ruwix.com/the-rubiks-cube/notation/
-    def L(self):
-        self._rotate_face(LEFT, ROT_YZ_CC)
-
-    def Li(self):
-        self._rotate_face(LEFT, ROT_YZ_CW)
-
-    def R(self):
-        self._rotate_face(RIGHT, ROT_YZ_CW)
-
-    def Ri(self):
-        self._rotate_face(RIGHT, ROT_YZ_CC)
-
-    def U(self):
-        self._rotate_face(UP, ROT_XZ_CW)
-
-    def Ui(self):
-        self._rotate_face(UP, ROT_XZ_CC)
-
-    def D(self):
-        self._rotate_face(DOWN, ROT_XZ_CC)
-
-    def Di(self):
-        self._rotate_face(DOWN, ROT_XZ_CW)
-
-    def F(self):
-        self._rotate_face(FRONT, ROT_XY_CW)
-
-    def Fi(self):
-        self._rotate_face(FRONT, ROT_XY_CC)
-
-    def B(self):
-        self._rotate_face(BACK, ROT_XY_CC)
-
-    def Bi(self):
-        self._rotate_face(BACK, ROT_XY_CW)
-
-    def M(self):
-        self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CC)
-
-    def Mi(self):
-        self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CW)
-
-    def E(self):
-        self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CC)
-
-    def Ei(self):
-        self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CW)
-
-    def S(self):
-        self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CW)
-
-    def Si(self):
-        self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CC)
-
-    def X(self):
-        self._rotate_pieces(self.pieces, ROT_YZ_CW)
-
-    def Xi(self):
-        self._rotate_pieces(self.pieces, ROT_YZ_CC)
-
-    def Y(self):
-        self._rotate_pieces(self.pieces, ROT_XZ_CW)
-
-    def Yi(self):
-        self._rotate_pieces(self.pieces, ROT_XZ_CC)
-
-    def Z(self):
-        self._rotate_pieces(self.pieces, ROT_XY_CW)
-
-    def Zi(self):
-        self._rotate_pieces(self.pieces, ROT_XY_CC)
+    def L(self): self._rotate_face(LEFT, ROT_YZ_CC)
+    def Li(self): self._rotate_face(LEFT, ROT_YZ_CW)
+    def R(self): self._rotate_face(RIGHT, ROT_YZ_CW)
+    def Ri(self): self._rotate_face(RIGHT, ROT_YZ_CC)
+    def U(self): self._rotate_face(UP, ROT_XZ_CW)
+    def Ui(self): self._rotate_face(UP, ROT_XZ_CC)
+    def D(self): self._rotate_face(DOWN, ROT_XZ_CC)
+    def Di(self): self._rotate_face(DOWN, ROT_XZ_CW)
+    def F(self): self._rotate_face(FRONT, ROT_XY_CW)
+    def Fi(self): self._rotate_face(FRONT, ROT_XY_CC)
+    def B(self): self._rotate_face(BACK, ROT_XY_CC)
+    def Bi(self): self._rotate_face(BACK, ROT_XY_CW)
+    def M(self): self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CC)
+    def Mi(self): self._rotate_slice(Y_AXIS + Z_AXIS, ROT_YZ_CW)
+    def E(self): self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CC)
+    def Ei(self): self._rotate_slice(X_AXIS + Z_AXIS, ROT_XZ_CW)
+    def S(self): self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CW)
+    def Si(self): self._rotate_slice(X_AXIS + Y_AXIS, ROT_XY_CC)
+    def X(self): self._rotate_pieces(self.pieces, ROT_YZ_CW)
+    def Xi(self): self._rotate_pieces(self.pieces, ROT_YZ_CC)
+    def Y(self): self._rotate_pieces(self.pieces, ROT_XZ_CW)
+    def Yi(self): self._rotate_pieces(self.pieces, ROT_XZ_CC)
+    def Z(self): self._rotate_pieces(self.pieces, ROT_XY_CW)
+    def Zi(self): self._rotate_pieces(self.pieces, ROT_XY_CC)
 
     def inverse_move_str(self, move_str) -> str:
         # For all moves that has an i, remove the i
@@ -376,47 +329,32 @@ class Cube:
         """
         return set(c for piece in self.pieces for c in piece.colors if c is not None)
 
-    def left_color(self):
-        return self[LEFT].colors[0]
-
-    def right_color(self):
-        return self[RIGHT].colors[0]
-
-    def up_color(self):
-        return self[UP].colors[1]
-
-    def down_color(self):
-        return self[DOWN].colors[1]
-
-    def front_color(self):
-        return self[FRONT].colors[2]
+    def left_color(self): return self[LEFT].colors[0]
+    def right_color(self): return self[RIGHT].colors[0]
+    def up_color(self): return self[UP].colors[1]
+    def down_color(self): return self[DOWN].colors[1]
+    def front_color(self): return self[FRONT].colors[2]
 
     def back_color(self):
         return self[BACK].colors[2]
 
-    def _color_list(self):
-        right = [p.colors[0] for p in sorted(self._face(RIGHT), key=lambda p: (-p.pos.y, -p.pos.z))]
-        left = [p.colors[0] for p in sorted(self._face(LEFT), key=lambda p: (-p.pos.y, p.pos.z))]
-        up = [p.colors[1] for p in sorted(self._face(UP), key=lambda p: (p.pos.z, p.pos.x))]
-        down = [p.colors[1] for p in sorted(self._face(DOWN), key=lambda p: (-p.pos.z, p.pos.x))]
-        front = [p.colors[2] for p in sorted(self._face(FRONT), key=lambda p: (-p.pos.y, p.pos.x))]
-        back = [p.colors[2] for p in sorted(self._face(BACK), key=lambda p: (-p.pos.y, -p.pos.x))]
+    def _object_list(self, attr):
+        right = [getattr(p, attr)[0] for p in sorted(self._face(RIGHT), key=lambda p: (-p.pos.y, -p.pos.z))]
+        left =  [getattr(p, attr)[0] for p in sorted(self._face(LEFT),  key=lambda p: (-p.pos.y, p.pos.z))]
+        up =    [getattr(p, attr)[1] for p in sorted(self._face(UP),    key=lambda p: (p.pos.z, p.pos.x))]
+        down =  [getattr(p, attr)[1] for p in sorted(self._face(DOWN),  key=lambda p: (-p.pos.z, p.pos.x))]
+        front = [getattr(p, attr)[2] for p in sorted(self._face(FRONT), key=lambda p: (-p.pos.y, p.pos.x))]
+        back =  [getattr(p, attr)[2] for p in sorted(self._face(BACK),  key=lambda p: (-p.pos.y, -p.pos.x))]
 
         return (up + left[0:3] + front[0:3] + right[0:3] + back[0:3]
                 + left[3:6] + front[3:6] + right[3:6] + back[3:6]
                 + left[6:9] + front[6:9] + right[6:9] + back[6:9] + down)
+
+    def _color_list(self):
+        return self._object_list("colors")
 
     def _data_list(self):
-        right = [p.datas[0] for p in sorted(self._face(RIGHT), key=lambda p: (-p.pos.y, -p.pos.z))]
-        left = [p.datas[0] for p in sorted(self._face(LEFT), key=lambda p: (-p.pos.y, p.pos.z))]
-        up = [p.datas[1] for p in sorted(self._face(UP), key=lambda p: (p.pos.z, p.pos.x))]
-        down = [p.datas[1] for p in sorted(self._face(DOWN), key=lambda p: (-p.pos.z, p.pos.x))]
-        front = [p.datas[2] for p in sorted(self._face(FRONT), key=lambda p: (-p.pos.y, p.pos.x))]
-        back = [p.datas[2] for p in sorted(self._face(BACK), key=lambda p: (-p.pos.y, -p.pos.x))]
-
-        return (up + left[0:3] + front[0:3] + right[0:3] + back[0:3]
-                + left[3:6] + front[3:6] + right[3:6] + back[3:6]
-                + left[6:9] + front[6:9] + right[6:9] + back[6:9] + down)
+        return self._object_list("datas")
 
     def flat_str(self):
         return "".join(x for x in str(self) if x not in string.whitespace)
@@ -432,12 +370,27 @@ class Cube:
                     "    {}{}{}\n"
                     "    {}{}{}")
 
-        # TODO: Some move destroys the data, need to fix it
         return "    " + template.format(*self._data_list()).strip()
 
+    def rotate(self):
+        template = ("       {}{}{}\n"
+                    "       {}{}{}\n"
+                    "       {}{}{}\n"
+                    "{}{}{} {}{}{} {}{}{}\n"
+                    "{}{}{} {}{}{} {}{}{}\n"
+                    "{}{}{} {}{}{} {}{}{}\n"
+                    "       {}{}{}\n"
+                    "       {}{}{}\n"
+                    "       {}{}{}\n"
+                    "       {}{}{}\n"
+                    "       {}{}{}\n"
+                    "       {}{}{}")
+
+        # Move around the elements in the data list to match this output
+        data_list = self._data_list()
+
+
     def __str__(self):
-
-
         template = ("    {}{}{}\n"
                     "    {}{}{}\n"
                     "    {}{}{}\n"
@@ -448,9 +401,10 @@ class Cube:
                     "    {}{}{}\n"
                     "    {}{}{}")
 
-
         return "    " + template.format(*self._color_list()).strip()
 
+    def __repr__(self):
+        return self.__str__()
 
 if __name__ == '__main__':
     cube = Cube("    DLU\n"

@@ -2,7 +2,7 @@ import string
 
 from rubik import cube
 from rubik.maths import Point
-from string import ascii_lowercase, ascii_uppercase
+from rubik.patterns import PATTERNS
 
 DEBUG = False
 
@@ -521,57 +521,3 @@ class Solver:
                self.cube[cube.LEFT + cube.FRONT].colors[0] == self.cube.left_color()
 
 
-def solve_for_target():
-
-    # TODO: Fill out these strings
-    start_str = "DLURRDFFUBBLDDRBRBLDLRBFRUULFBDDUFBRBBRFUDFLUDLUULFLFR"
-    target_str = "ROORRYOWBWWGBYGRRBYBGGGGWWOYYBRBOWBYRWOGBYORYBOWYOGRGW"
-
-    # TODO: Fix all the formatting i changed
-    # TODO: Write docs
-
-    c_start = cube.Cube(start_str)
-    c_end = cube.Cube(target_str)
-
-    solver = Solver(c_start)
-    solver_reverse = Solver(c_end)
-
-    solver.solve()
-    solver_reverse.solve()
-
-    print(f"{len(solver.moves)} moves: {' '.join(solver.moves)}")
-    print(f"{len(solver_reverse.moves)} moves: {' '.join(solver_reverse.moves)}")
-
-    # Fill data list with the elements AAA BBB CCC untill we get up to 54 elements
-    data_list = []
-    for i in range(54):
-        data_list.append(string.ascii_uppercase[i % 26])
-
-
-    cube_solve = cube.Cube(start_str, data_list)
-
-    print("--------------------")
-    print("Start")
-    print(cube_solve)
-    print(cube_solve.str_data())
-    print("--------------------")
-
-    cube_solve.sequence(" ".join(solver.moves))
-
-    print("--------------------")
-    print("Start")
-    print(cube_solve)
-    print(cube_solve.str_data())
-    print("--------------------")
-    cube_solve.inverse_sequence(" ".join(solver_reverse.moves))
-    print("--------------------")
-    print("Moved")
-    print(cube_solve)
-    print(cube_solve.str_data())
-    print("--------------------")
-
-
-
-
-if __name__ == '__main__':
-    solve_for_target()
