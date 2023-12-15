@@ -88,7 +88,7 @@ def solve_with_data():
     print("Solved data:")
     print(c_root.str_data(), end="\n\n")
 
-    print("As you can try to read out: 'PAPA{FLAGS_ARE_FUN}'")
+    print("As you can try to read out: 'PAPA{FLAGS_ARE_COOL}'")
 
 
 if __name__ == '__main__':
@@ -140,7 +140,7 @@ _DU _SO ESP UK_
     _ØL
     XKR
 
-As you can try to read out: 'PAPA{FLAGS_ARE_FUN}'
+As you can try to read out: 'PAPA{FLAGS_ARE_COOL}'
 ```
 
 # Solve for target pattern:
